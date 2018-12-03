@@ -1,9 +1,7 @@
 package pl.umcs;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,16 @@ public class AbsenceController {
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Absence> getEmployees(){
         return absenceService.getAll();
+    }
+
+    @GetMapping("/av")
+    public String getAvailability(){
+        return String.valueOf(absenceService.isEmployeeAvailableNow(1));
+    }
+
+    @PostMapping(path = "/add", consumes = APPLICATION_JSON_VALUE)
+    public Absence addAbsence(@RequestBody Absence absence){
+        absenceService.save(absence);
+        return absence;
     }
 }
