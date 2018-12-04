@@ -18,7 +18,7 @@ public class AbsenceController {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public List<Absence> getEmployees(){
+    public List<Absence> getAbsences(){
         return absenceService.getAll();
     }
 
