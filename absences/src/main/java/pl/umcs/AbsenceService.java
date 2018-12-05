@@ -28,9 +28,10 @@ public class AbsenceService {
 
     public Absence save(Absence absence){
         if(isEmployeePresentBetween(absence.getBeginning(), absence.getEnd(), absence.getEmployeeId())) {
-            absenceRepository.save(absence);
+            Absence savedAbsence = absenceRepository.save(absence);
+            return savedAbsence;
         }
-        return absence;
+        return null;
     }
 
     private boolean isEmployeePresentBetween(LocalDate beginning, LocalDate end, long employeeId){

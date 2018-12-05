@@ -28,8 +28,10 @@ public class AbsenceController {
     }
 
     @PostMapping(path = "/add", consumes = APPLICATION_JSON_VALUE)
-    public Absence addAbsence(@RequestBody Absence absence){
-        absenceService.save(absence);
-        return absence;
+    public String addAbsence(@RequestBody Absence absence){
+        if(absenceService.save(absence) != null){
+            return "Your leave has been reserved";
+        }
+        return "Reservation error";
     }
 }
