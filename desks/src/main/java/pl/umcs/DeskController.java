@@ -28,8 +28,12 @@ public class DeskController {
     }
 
     @PostMapping(path = "/employee", consumes = APPLICATION_JSON_VALUE)
-    public Desk getDeskOfEmployee(@RequestBody Desk desk){
-        return deskService.getDeskOfEmployee(desk.getEmployeeId());
+    public String getDeskOfEmployee(@RequestBody Desk desk){
+        Desk employeesDesk = deskService.getDeskOfEmployee(desk.getEmployeeId());
+        if(employeesDesk != null){
+            return "Desk of employee " + employeesDesk.getEmployeeId() + " has code " + employeesDesk.getId();
+        }
+        return "No desk has been found";
     }
 
     @PostMapping(path = "/assign", consumes = APPLICATION_JSON_VALUE)

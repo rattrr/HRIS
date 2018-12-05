@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import pl.umcs.dto.Employee;
 import pl.umcs.dto.Leave;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public class HRMController
     public String takeLeave(@RequestBody  Leave leave){
         String appUrl = findUrlOfApplication("absences") + "/add";
         return restTemplate.postForObject(appUrl, leave, String.class);
+    }
+
+    @PostMapping("/getDeskOfEmployee")
+    public String getDeskOfEmployee(@RequestBody Employee employee){
+        String appUrl = findUrlOfApplication("desks") + "/employee";
+        return restTemplate.postForObject(appUrl, employee, String.class);
     }
 
 
