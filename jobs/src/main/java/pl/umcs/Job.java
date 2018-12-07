@@ -61,6 +61,10 @@ public class Job {
         this.tasks = tasks;
     }
 
+    public void addTask(Task task){
+        this.tasks.add(task);
+    }
+
     public boolean isSigned() {
         return isSigned;
     }

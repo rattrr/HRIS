@@ -10,10 +10,16 @@ import java.util.stream.StreamSupport;
 @Service
 public class JobService {
     private final JobRepository jobRepository;
+    private final TaskRepository taskRepository;
 
     @Autowired
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, TaskRepository taskRepository) {
         this.jobRepository = jobRepository;
+        this.taskRepository = taskRepository;
+    }
+
+    public Job getJobById(long id){
+        return jobRepository.findById(id).orElse(null);
     }
 
     public List<Job> getAll(){
@@ -30,8 +36,11 @@ public class JobService {
         return job;
     }
 
-    private boolean isNotNull(Job job){
-        return job != null;
+    public void addTask(Job job, String description){
+        Task task = new Task(job, description);
+        job.addTask(task);
+        jobRepository.save(job);
+        taskRepository.save(task);
     }
 
     public boolean tasksNotEmpty(Job job){
@@ -39,6 +48,6 @@ public class JobService {
     }
 
     public Job getRestOfData(Job job){
-        return jobRepository.findById(job.getId()).orElse(null);
+        return getJobById(job.getId());
     }
 }

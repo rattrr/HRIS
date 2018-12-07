@@ -40,4 +40,14 @@ public class JobController {
         }
         return "Job hasn't been signed: tasks list empty";
     }
+
+    @PostMapping(path = "/addTask", consumes = APPLICATION_JSON_VALUE)
+    public String add(@RequestBody TaskToAdd taskToAdd){
+        Job job = jobService.getJobById(taskToAdd.getJobId());
+        if (job == null){
+            return "Job hasn't been found";
+        }
+        jobService.addTask(job, taskToAdd.getDescription());
+        return "Task has been added";
+    }
 }
