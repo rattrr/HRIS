@@ -1,12 +1,12 @@
 package pl.umcs;
 
-public class TaskToAdd {
+public class NewTask {
     long jobId;
     String description;
 
-    TaskToAdd(){}
+    NewTask(){}
 
-    public TaskToAdd(long jobId, String description) {
+    public NewTask(long jobId, String description) {
         this.jobId = jobId;
         this.description = description;
     }

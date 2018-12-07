@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pl.umcs.dto.Employee;
+import pl.umcs.dto.Job;
 import pl.umcs.dto.Leave;
+import pl.umcs.dto.NewTask;
 
 import java.util.List;
 
@@ -40,6 +42,17 @@ public class HRMController
         return restTemplate.postForObject(appUrl, employee, String.class);
     }
 
+    @PostMapping("/signJob")
+    public String signJob(@RequestBody Job job){
+        String appUrl = findUrlOfApplication("jobs") + "/sign";
+        return restTemplate.postForObject(appUrl, job, String.class);
+    }
+
+    @PostMapping("/addTask")
+    public String addTask(@RequestBody NewTask task){
+        String appUrl = findUrlOfApplication("jobs") + "/addTask";
+        return restTemplate.postForObject(appUrl, task, String.class);
+    }
 
     private String findUrlOfApplication(String applicationName){
         Application application = eurekaClient.getApplication(applicationName);

@@ -3,7 +3,6 @@ package pl.umcs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -42,12 +41,12 @@ public class JobController {
     }
 
     @PostMapping(path = "/addTask", consumes = APPLICATION_JSON_VALUE)
-    public String add(@RequestBody TaskToAdd taskToAdd){
-        Job job = jobService.getJobById(taskToAdd.getJobId());
+    public String add(@RequestBody NewTask newTask){
+        Job job = jobService.getJobById(newTask.getJobId());
         if (job == null){
             return "Job hasn't been found";
         }
-        jobService.addTask(job, taskToAdd.getDescription());
+        jobService.addTask(job, newTask.getDescription());
         return "Task has been added";
     }
 }
