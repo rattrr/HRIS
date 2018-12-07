@@ -1,10 +1,9 @@
 package pl.umcs;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Job {
@@ -12,16 +11,22 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long employeeId;
+    @OneToMany(mappedBy = "job")
+    List<Task> tasks = new ArrayList<>();
     private Month month;
-    private String description;
     private boolean isSigned = false;
 
     public Job(){}
 
-    public Job(long employeeId, Month month, String description) {
+    public Job(long employeeId, Month month) {
         this.employeeId = employeeId;
         this.month = month;
-        this.description = description;
+    }
+
+    public Job(long id, long employeeId, Month month) {
+        this.id = id;
+        this.employeeId = employeeId;
+        this.month = month;
     }
 
     public long getId() {
@@ -48,12 +53,12 @@ public class Job {
         this.month = month;
     }
 
-    public String getDescription() {
-        return description;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public boolean isSigned() {

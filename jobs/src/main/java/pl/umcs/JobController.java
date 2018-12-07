@@ -29,8 +29,15 @@ public class JobController {
     }
 
     @PostMapping(path = "/sign", consumes = APPLICATION_JSON_VALUE)
-    public Job test(@RequestBody Job job){
-        jobService.signJob(job);
-        return job;
+    public String sign(@RequestBody Job jobWithIdOnly){
+        Job job = jobService.getRestOfData(jobWithIdOnly);
+        if(job == null){
+            return "Job hasn't been found";
+        }
+        if(jobService.tasksNotEmpty(job)) {
+            jobService.signJob(job);
+            return "Job has been signed";
+        }
+        return "Job hasn't been signed: tasks list empty";
     }
 }

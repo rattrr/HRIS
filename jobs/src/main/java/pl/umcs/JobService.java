@@ -24,14 +24,21 @@ public class JobService {
         return jobRepository.getAllByEmployeeIdEquals(employeeId);
     }
 
-    public void signJob(Job job){
-        if(jobExists(job)){
-            job.setSigned(true);
-            jobRepository.save(job);
-        }
+    public Job signJob(Job job){
+        job.setSigned(true);
+        jobRepository.save(job);
+        return job;
     }
 
-    private boolean jobExists(Job job){
-        return jobRepository.findById(job.getId()).isPresent();
+    private boolean isNotNull(Job job){
+        return job != null;
+    }
+
+    public boolean tasksNotEmpty(Job job){
+        return !job.getTasks().isEmpty();
+    }
+
+    public Job getRestOfData(Job job){
+        return jobRepository.findById(job.getId()).orElse(null);
     }
 }
